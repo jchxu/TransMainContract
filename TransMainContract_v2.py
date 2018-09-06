@@ -77,3 +77,5 @@ for i in range(2014,2019):
                 maincontract = checkIrecdate(recdate, recyear, keyI)
                 if item.CONTRACTID == maincontract:
                     print(item.CONTRACTID, item.TDATETIME, item.OPENPX, item.HIGHPX, item.LOWPX, item.LASTPX, item.MINQTY, item.TURNOVER, item.OPENINTS, item.CHGMIN, item.CHGPCTMIN,sep=',',file=Iresfile)
+RBresfile.close()
+Iresfile.close()
