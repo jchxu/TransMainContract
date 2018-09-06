@@ -42,6 +42,8 @@ def checkIrecdate(recdate,recyear,keyI):
         return ('I'+recyear[2:4]+'01')
     elif keyIdate3 <= recdate and recdate < keyIdate4:
         return ('I'+str(int(recyear[2:4])+1)+'05')
+print('CONTRACTID', 'TDATETIME', 'OPENPX', 'HIGHPX', 'LOWPX', 'LASTPX', 'MINQTY', 'TURNOVER', 'OPENINTS', 'CHGMIN', 'CHGPCTMIN',sep=',',file=RBresfile)
+print('CONTRACTID', 'TDATETIME', 'OPENPX', 'HIGHPX', 'LOWPX', 'LASTPX', 'MINQTY', 'TURNOVER', 'OPENINTS', 'CHGMIN', 'CHGPCTMIN',sep=',',file=Iresfile)
 
 # 根据年份和月份获取csv文件名
 for i in range(2014,2019):
