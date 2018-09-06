@@ -19,13 +19,13 @@ def checkRBrecdate(recdate,recyear,keyRB):
     keyRBdate1 = recyear + '-' + keyRB[0]
     keyRBdate2 = recyear + '-' + keyRB[1]
     keyRBdate3 = recyear + '-' + keyRB[2]
-    keyRBdate4 = str(int(recyear)+1) + '-' + keyRB[2]
+    keyRBdate4 = str(int(recyear)+1) + '-' + keyRB[0]
     if keyRBdate0 <= recdate and recdate < keyRBdate1:
         return ('RB'+recyear[2:4]+'05')
     elif keyRBdate1 <= recdate and recdate < keyRBdate2:
         return ('RB'+recyear[2:4]+'10')
     elif keyRBdate2 <= recdate and recdate < keyRBdate3:
-        return ('RB'+recyear[2:4]+'01')
+        return ('RB'+str(int(recyear[2:4])+1)+'01')
     elif keyRBdate3 <= recdate and recdate < keyRBdate4:
         return ('RB'+str(int(recyear[2:4])+1)+'05')
 def checkIrecdate(recdate,recyear,keyI):
@@ -33,13 +33,13 @@ def checkIrecdate(recdate,recyear,keyI):
     keyIdate1 = recyear + '-' + keyI[0]
     keyIdate2 = recyear + '-' + keyI[1]
     keyIdate3 = recyear + '-' + keyI[2]
-    keyIdate4 = str(int(recyear)+1) + '-' + keyI[2]
+    keyIdate4 = str(int(recyear)+1) + '-' + keyI[0]
     if keyIdate0 <= recdate and recdate < keyIdate1:
         return ('I'+recyear[2:4]+'05')
     elif keyIdate1 <= recdate and recdate < keyIdate2:
         return ('I'+recyear[2:4]+'09')
     elif keyIdate2 <= recdate and recdate < keyIdate3:
-        return ('I'+recyear[2:4]+'01')
+        return ('I'+str(int(recyear[2:4])+1)+'01')
     elif keyIdate3 <= recdate and recdate < keyIdate4:
         return ('I'+str(int(recyear[2:4])+1)+'05')
 print('CONTRACTID', 'TDATETIME', 'OPENPX', 'HIGHPX', 'LOWPX', 'LASTPX', 'MINQTY', 'TURNOVER', 'OPENINTS', 'CHGMIN', 'CHGPCTMIN',sep=',',file=RBresfile)
