@@ -17,8 +17,8 @@ JMainfiles = []
 IMainFile = "I_MainContract.csv"
 JMainFile = "J_MainContract.csv"
 
-path = 'data/'
-#path = './'
+#path = 'data/'
+path = './'
 allfiles = os.listdir(path)
 
 ### 根据合约名和日期，判断是否为主力合约(焦煤、铁矿、焦炭)
