@@ -21,10 +21,9 @@ df3 = pd.DataFrame
 for index,row in df2.iterrows():
     recdatetime = row.datetime
     if '.' in recdatetime:
-        recdthms = recdatetime.split('.')[0]
+        recdt = recdatetime.split('.')[0]
     else:
-        recdthms = recdatetime
-    recdt = recdthms[:-3]
+        recdt = recdatetime
     if not (recdt in existdts):
         existdts.append(recdt)
         print(recdt)

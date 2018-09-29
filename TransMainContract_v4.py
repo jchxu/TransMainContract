@@ -78,19 +78,6 @@ for item in IMainfiles:
     print("Read file: %s" % item)
     file = path+item
     data = pd.read_csv(file,encoding='gbk',dtype=str,usecols=list)
-
-    existdts = []
-    df2 = data.sort_index(ascending=False)  # 数据倒序，变为查找相同分钟的第一个数据
-    for index, row in df2.iterrows():
-        recdatetime = row.datetime
-        if '.' in recdatetime:
-            recdt = recdatetime.split('.')[0]
-        else:
-            recdt = recdatetime
-        if not (recdt in existdts):
-            existdts.append(recdt)
-
-
     if os.path.exists(IMainFile):
         data.to_csv(IMainFile,index=0,mode='a',header=0)
     else:
