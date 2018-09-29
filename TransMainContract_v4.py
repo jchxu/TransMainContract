@@ -32,14 +32,13 @@ def CheckCodeDate(KeyDateIJ,contract,filedate):
     keydate2 = fileyear+KeyDateIJ[1]    #今年0801
     keydate3 = fileyear+KeyDateIJ[2]    #今年1201
     keydate4 = str(int(fileyear)+1)+KeyDateIJ[0]    #下面0315
-    if (keydate0 <= filedate) and (filedate <= keydate1) and ((shortyear+'05') in contract): return True   #1201-0315,今年05
-    elif (keydate1 <= filedate) and (filedate <= keydate2) and ((shortyear+'09') in contract): return True   #0315-0801,今年09
-    elif (keydate2 <= filedate) and (filedate <= keydate3) and ((str(int(shortyear)+1)+'01') in contract): return True   #0801-1201,下年01
-    elif (keydate3 <= filedate) and (filedate <= keydate4) and ((str(int(shortyear)+1)+'05') in contract): return True   #1201-0315,下年05
+    if (keydate0 <= filedate) and (filedate < keydate1) and ((shortyear+'05') in contract): return True   #1201-0314,今年05
+    elif (keydate1 <= filedate) and (filedate < keydate2) and ((shortyear+'09') in contract): return True   #0315-0731,今年09
+    elif (keydate2 <= filedate) and (filedate < keydate3) and ((str(int(shortyear)+1)+'01') in contract): return True   #0801-1130,下年01
+    elif (keydate3 <= filedate) and (filedate < keydate4) and ((str(int(shortyear)+1)+'05') in contract): return True   #1201-0314,下年05
 
 ### 根据合约读取切换日的部分数据
 def ReadPart(file,codeend,fileday):
-    codedaycode = {'0315':['05','09'],'0801':['09','01'],'1201':['01','05']}
     # 查找切换日期的行index
     tempdata = pd.read_csv(file, encoding='gbk', dtype=str, usecols=list)
     tempdata.rename(columns={'dt':'datetime'},inplace = True)
@@ -78,10 +77,20 @@ for item in Jfiles:     #焦煤
 for item in IMainfiles:
     print("Read file: %s" % item)
     file = path+item
-    codeend = item.split('_')[0][-2:]
-    fileday = item.rstrip('.csv')[-4:]
-    if fileday in KeyDateIJ: date = ReadPart(file,codeend,fileday)
-    else: data = pd.read_csv(file,encoding='gbk',dtype=str,usecols=list)
+    data = pd.read_csv(file,encoding='gbk',dtype=str,usecols=list)
+
+    existdts = []
+    df2 = data.sort_index(ascending=False)  # 数据倒序，变为查找相同分钟的第一个数据
+    for index, row in df2.iterrows():
+        recdatetime = row.datetime
+        if '.' in recdatetime:
+            recdt = recdatetime.split('.')[0]
+        else:
+            recdt = recdatetime
+        if not (recdt in existdts):
+            existdts.append(recdt)
+
+
     if os.path.exists(IMainFile):
         data.to_csv(IMainFile,index=0,mode='a',header=0)
     else:
@@ -90,10 +99,7 @@ for item in IMainfiles:
 for item in JMainfiles:
     print("Read file: %s" % item)
     file = path+item
-    codeend = item.split('_')[0][-2:]
-    fileday = item.rstrip('.csv')[-4:]
-    if fileday in KeyDateIJ: date = ReadPart(file,codeend,fileday)
-    else: data = pd.read_csv(file,encoding='gbk',dtype=str,usecols=list)
+    data = pd.read_csv(file,encoding='gbk',dtype=str,usecols=list)
     if os.path.exists(JMainFile):
         data.to_csv(JMainFile, index=0, mode='a', header=0)
     else:
